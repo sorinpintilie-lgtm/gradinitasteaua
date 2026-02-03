@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grădinița Steaua - Universul Copilăriei</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Promo Bar Height Variable */
+            --promo-height: 40px;
+            --sky-blue: #4FC3F7;
+            --bg-peach: #FFF0EB;
+            --sticky-green: #E8F5E9;
+            --sticky-yellow: #FFFDE7;
+            --text-dark: #37474F;
+            --btn-purple: #AB47BC;
+            --btn-orange: #FF7043;
+            --accent-blue: #1565C0;
+            --grass-green: #7CB342;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        /* --- Backgrounds & Body Layout --- */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            color: #4A5568; /* Updated color from snippet */
+            overflow-x: hidden;
+            line-height: 1.6;
+            
+            /* New Background from snippet */
+            background-color: #FFF9F0;
+            background-image: 
+                linear-gradient(#E5E5F7 1px, transparent 1px),
+                linear-gradient(90deg, #E5E5F7 1px, transparent 1px);
+            background-size: 40px 40px;
+            
+            /* Adjust body padding to prevent content hiding behind fixed bar */
+            padding-top: calc(var(--promo-height) + env(safe-area-inset-top));
+        }
+
+        /* --- PROMO BAR STYLES --- */
+        .promo-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(var(--promo-height) + env(safe-area-inset-top));
+            background: #F2B94B;
+            color: #1F2933;
+            z-index: 9999;
+            padding-top: env(safe-area-inset-top);
+            border-bottom: 1px solid rgba(0,0,0,0.1); /* Separator */
+            font-family: 'Inter', sans-serif;
+            font-weight: 400; /* Regular weight */
+            font-size: 13px;
+            line-height: var(--promo-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .promo-content {
+            width: 100%;
+            max-width: 1240px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .promo-content a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Desktop View */
+        .promo-desktop {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        .promo-desktop span a {
+            font-weight: 500;
+        }
+
+        .promo-cta-btn {
+            background-color: #2F80ED;
+            color: white !important;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 400;
+            text-decoration: none;
+            line-height: 1.5;
+            transition: opacity 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            height: 24px;
+            margin-top: 8px; /* Center vertically relative to 40px height */
+        }
+        .promo-cta-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Mobile View */
+        .promo-mobile {
+            display: none;
+            width: 100%;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+
+        .promo-seg {
+            white-space: nowrap;
+        }
+
+        .promo-seg.left {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-shrink: 1; /* Allow truncation */
+            text-align: left;
+            margin-right: 8px;
+        }
+
+        .promo-seg.center {
+            flex-shrink: 0; /* Prevent truncation */
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .promo-seg.right {
+            flex-shrink: 0; /* Prevent truncation */
+            text-align: right;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        /* Responsive Switching */
+        @media (max-width: 768px) {
+            .promo-desktop { display: none; }
+            .promo-mobile { display: flex; }
+        }
+
+        /* --- Header Adjustment --- */
+        #main-header {
+            /* Push header down by promo height */
+            top: calc(var(--promo-height) + env(safe-area-inset-top));
+        }
+
+        /* --- Sticker Icons Styling --- */
+        .sticker-icon {
+            filter: drop-shadow(2px 3px 2px rgba(0,0,0,0.15));
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+        }
+        .sticker-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .sticker-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* --- Components --- */
+        .btn-bouncy {
+            transition: transform 0.2s;
+        }
+        .btn-bouncy:hover { transform: scale(1.05) rotate(-1deg); }
+        .btn-bouncy:active { transform: scale(0.95); }
+
+        .blob-shape {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+
+        /* --- Animations --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+        
+        @keyframes wobble {
+            0% { transform: rotate(0deg); }
+            15% { transform: rotate(-5deg); }
+            30% { transform: rotate(3deg); }
+            45% { transform: rotate(-3deg); }
+            60% { transform: rotate(2deg); }
+            75% { transform: rotate(-1deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes drive {
+            0% { transform: translateX(-150px); }
+            100% { transform: translateX(100vw); }
+        }
+
+        @keyframes blob-bounce {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        /* --- Table Styling --- */
+        .menu-notebook {
+            background: white;
+            background-image: repeating-linear-gradient(transparent, transparent 47px, #E2E8F0 48px);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+        }
+        .menu-notebook td { height: 48px; padding: 12px; vertical-align: bottom; }
+        
+        /* Modal Transition */
+        .modal-enter { opacity: 0; pointer-events: none; }
+        .modal-enter-active { opacity: 1; pointer-events: auto; }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        h1, h2, h3, h4 { font-family: 'Baloo 2', cursive; color: var(--accent-blue); }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: 1fr; /* Default to 1 column for mobile */
+            gap: 30px; 
+            align-items: center; 
+        }
+
+        /* Desktop: 2 columns */
+        @media (min-width: 769px) {
+            .grid-2 { 
+                grid-template-columns: 1fr 1fr; 
+                gap: 60px; 
+            }
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(255,255,255,0.9); position: sticky; 
+            /* Top will be handled by #main-header ID to respect promo bar */
+            z-index: 1000; backdrop-filter: blur(10px);
+            border-bottom: 3px solid rgba(0,0,0,0.05);
+        }
+        .logo { 
+            font-family: 'Baloo 2'; 
+            font-size: 1.2rem; /* Smaller for mobile */
+            color: var(--sky-blue); 
+            font-weight: 800; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            white-space: nowrap;
+        }
+
+        @media (min-width: 769px) {
+            .logo { font-size: 1.8rem; }
+        }
+        .logo i { color: #FDD835; text-shadow: 2px 2px 0 #FF6F00; animation: wobble 2s infinite ease-in-out; animation-delay: 3s; }
+        
+        .nav-links a { margin-left: 25px; text-decoration: none; font-weight: 700; color: var(--text-dark); transition: 0.3s; position: relative; }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 3px; bottom: -5px; left: 0;
+            background-color: var(--btn-orange); border-radius: 2px; transition: 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        
+        .btn-cta { 
+            background: var(--btn-orange); color: white !important; padding: 12px 28px; border-radius: 50px; 
+            box-shadow: 0 5px 0 #D84315; transition: 0.2s; display: inline-block;
+        }
+        .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #D84315; }
+        .btn-cta:active { transform: translateY(2px); box-shadow: 0 2px 0 #D84315; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(180deg, var(--sky-blue) 0%, #81D4FA 100%);
+            padding: 80px 20px 220px; text-align: center; color: white; position: relative; overflow: hidden;
+        }
+        .hero h1 { 
+            font-size: 2.5rem; /* Smaller for mobile */
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1); 
+            margin-bottom: 15px; 
+            color: white; 
+            line-height: 1.2;
+            animation: float 6s infinite ease-in-out; 
+        }
+
+        @media (min-width: 769px) {
+            .hero h1 { font-size: 4rem; }
+        }
+        .hero p { font-size: 1.4rem; opacity: 0.95; color: white; margin-bottom: 40px; font-weight: 600; }
+        
+        .hero-img-wrapper {
+            position: relative; max-width: 850px; margin: 0 auto; z-index: 5;
+            width: 100%;
+            padding: 0 10px;
+        }
+        .blob-bg {
+            position: absolute; top: -10%; left: -5%; width: 110%; height: 110%;
+            background: rgba(255,255,255,0.3); z-index: -1;
+            animation: blob-bounce 8s infinite ease-in-out;
+        }
+
+        .hero-img {
+            width: 100%; border-radius: 30px; border: 12px solid white;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2); transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+        .hero-img:hover { transform: rotate(0deg) scale(1.02); }
+
+        /* --- CLOUD SEPARATOR --- */
+        .cloud-separator {
+            position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0;
+            z-index: 2;
+        }
+        .cloud-separator svg {
+            position: relative; display: block; width: calc(100% + 1.3px); height: 100px;
+        }
+        .cloud-separator .shape-fill { fill: #FFF9F0; /* Matches new body bg */ }
+
+        /* --- FLOATING CARDS --- */
+        .cards-container { margin-top: -120px; position: relative; z-index: 10; padding-bottom: 60px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .float-card {
+            background: white; padding: 40px 30px; border-radius: 25px; text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: 0.4s;
+            border-bottom: 8px solid; position: relative; overflow: hidden;
+        }
+        .float-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 10px;
+            background: inherit; opacity: 0.2;
+        }
+        .float-card:hover { transform: translateY(-15px) scale(1.02); box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+        .float-card i { font-size: 3rem; margin-bottom: 20px; display: inline-block; }
+        .float-card:hover i { animation: wobble 0.8s ease-in-out; }
+
+        .c-purple { border-color: #BA68C8; } .c-purple i { color: #BA68C8; }
+        .c-orange { border-color: #FF8A65; } .c-orange i { color: #FF8A65; }
+        .c-green { border-color: #AED581; } .c-green i { color: #AED581; }
+
+        /* --- SECTIONS --- */
+        .section-padding { padding: 100px 0; }
+        
+        .peach-section { 
+            background-color: var(--bg-peach); position: relative;
+            background-image: linear-gradient(135deg, #FFF9F0 25%, transparent 25%), linear-gradient(225deg, #FFF9F0 25%, transparent 25%);
+            background-position: top center;
+            background-size: 40px 40px;
+            background-repeat: repeat-x;
+            padding-top: 120px;
+        }
+        
+        .sticky-note {
+            background: var(--sticky-green); padding: 40px; position: relative;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1); margin-bottom: 40px;
+            border-radius: 2px 2px 25px 2px;
+            transition: transform 0.3s;
+        }
+        .sticky-note:hover { transform: scale(1.03) !important; z-index: 5; }
+        .pin { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); color: #EF5350; font-size: 2rem; z-index: 2; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3)); }
+        
+        .about-img {
+            width: 100%; border-radius: 40px; border: 10px solid white;
+            box-shadow: 15px 15px 0 var(--sky-blue);
+        }
+
+        /* --- CURRICULUM --- */
+        .curriculum-list li { 
+            list-style: none; margin-bottom: 18px; font-weight: 700; font-size: 1.1rem;
+            display: flex; align-items: center; gap: 15px;
+            background: white; padding: 10px 15px; border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s;
+        }
+        .curriculum-list li:hover { transform: translateX(10px); color: var(--btn-purple); }
+        .curriculum-list li i { color: var(--btn-green); font-size: 1.4rem; }
+
+        .cloud-img {
+            width: 100%; 
+            height: auto; /* Allow height to scale naturally */
+            max-height: 300px;
+            border-radius: 60% 40% 70% 30% / 40% 50% 50% 60%;
+            border: 8px solid var(--sky-blue); 
+            object-fit: cover; 
+            animation: blob-bounce 10s infinite linear;
+        }
+
+        /* --- ACTIVITIES --- */
+        .magic-item {
+            text-align: center;
+            padding: 20px;
+        }
+        .magic-item h3 { font-size: 1.8rem; margin: 15px 0 10px; color: var(--accent-blue); }
+        .magic-item p { font-size: 1.1rem; color: #546E7A; }
+
+        .round-img {
+            width: 280px; height: 280px; object-fit: cover; border-radius: 50%;
+            border: 10px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 15px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .round-img:hover { transform: scale(1.1) rotate(5deg); border-color: white; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+
+        /* --- FOOTER --- */
+        footer { 
+            background: #263238; color: #ECEFF1; position: relative; 
+            margin-top: 0; 
+            padding-bottom: 20px;
+        }
+        
+        .grass-border {
+            position: absolute; top: -40px; left: 0; width: 100%; height: 40px;
+            background: radial-gradient(circle at 10px 0, transparent 9px, #7CB342 10px, #558B2F 20px);
+            background-size: 20px 40px;
+            transform: rotate(180deg);
+            z-index: 5;
+        }
+        
+        .footer-content {
+            padding: 60px 20px 60px;
+            display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 50px;
+        }
+        
+        .footer-col h3 { color: var(--sky-blue); margin-bottom: 20px; font-size: 1.5rem; }
+        .footer-col p { font-size: 0.95rem; margin-bottom: 10px; color: #B0BEC5; }
+        .footer-col a { color: #ECEFF1; text-decoration: none; display: block; margin-bottom: 8px; transition: 0.3s; }
+        .footer-col a:hover { color: var(--btn-orange); padding-left: 5px; }
+
+        .footer-logo { font-family: 'Baloo 2'; font-size: 2rem; color: white; margin-bottom: 15px; display: block; }
+        .social-icons a { display: inline-block; margin-right: 15px; font-size: 1.5rem; transition: 0.3s; }
+        .social-icons a:hover { transform: scale(1.2); }
+
+        /* Bus Animation */
+        .bus-container {
+            position: absolute; bottom: 0px; width: 100%; height: 60px; overflow: hidden; pointer-events: none;
+        }
+        .bus {
+            font-size: 3rem; color: #FDD835; position: absolute; bottom: 5px; left: -100px;
+            animation: drive 15s infinite linear;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        /* Back to top balloon */
+        .balloon-btn {
+            position: fixed; bottom: 30px; right: 30px; 
+            width: 60px; height: 70px; background: #FF5252;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            display: flex; justify-content: center; align-items: center;
+            color: white; font-size: 1.5rem; text-decoration: none;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2); z-index: 999;
+            transition: 0.3s; opacity: 0; transform: translateY(100px);
+        }
+        .balloon-btn.show { opacity: 1; transform: translateY(0); animation: float 3s infinite ease-in-out; }
+        .balloon-btn::after {
+            content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
+            width: 2px; height: 15px; background: #FF5252;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .grid-2, .footer-content { grid-template-columns: 1fr; gap: 40px; }
+            .nav-links { display: none; }
+            .hero-img { transform: none; }
+            .footer-content { text-align: center; }
+            .grass-border { background-size: 20px 40px; }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden font-sans text-slate-600">
+
+    <div class="promo-bar">
+        <div class="promo-content">
+            <div class="promo-desktop">
+                <span>Conținut orientativ • Dezvoltat de <a href="https://sky.ro" target="_blank">sky.ro</a> • <a href="mailto:dan.trifan@sky.ro">dan.trifan@sky.ro</a> • <a href="tel:+40720088880">+4 0720 088 880</a></span>
+                <a class="promo-cta-btn" href="https://wa.me/40720088880">WhatsApp</a>
+            </div>
+            <div class="promo-mobile">
+                <div class="promo-seg left">Concept demo</div>
+                <div class="promo-seg center">Dezvoltat de <a href="https://sky.ro" target="_blank">sky.ro</a></div>
+                <div class="promo-seg right"><a href="tel:+40720088880">+4 0720 088 880</a></div>
+            </div>
+        </div>
+    </div>
+
+    <nav id="main-header">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Steaua" class="h-12 w-auto rounded-full border-2 border-yellow-400"> 
+            GRĂDINIȚA STEAUA
+        </div>
+        <div class="nav-links">
+            <a href="#despre">Despre noi</a>
+            <a href="#curriculum">Curriculum</a>
+            <a href="#activitati">Activități</a>
+            <a href="#contact" class="btn-cta">Înscrieri 2026</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Bine ați venit la Steaua!</h1>
+            <p>Locul unde educația prinde aripi prin joacă și prietenie.</p>
+            
+            <div class="hero-img-wrapper">
+                <div class="blob-bg"></div>
+                <img src="children-learning-in-a-school-classroom-2026-01-09-10-50-11-utc.webp" class="hero-img" alt="Copii fericiti la gradinita">
+            </div>
+        </div>
+        
+        <div class="cloud-separator">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" style="opacity:0"></path>
+                <path d="M0,0V15.81C13,36.92,54.64,75.06,128.23,88.47c132.89,24.22,130.63-27.42,274.65-27.42,126.87,0,131.57,63.09,251.13,67.89S759,96.53,799.3,77.94c52.62-24.3,95-58.42,166.7-65.7C1043.68,4.3,1116.59,23.3,1200,43V0Z" fill="#FFF9F0" transform="scale(1, -1) translate(0, -100)"></path>
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <div class="container cards-container reveal">
+        <div class="cards-grid">
+            <div class="float-card c-purple">
+                <i class="fas fa-palette"></i>
+                <h3>Creativitate</h3>
+                <p>Pictură, teatru de păpuși și ateliere de artă manuală.</p>
+            </div>
+            <div class="float-card c-orange">
+                <img src="adorable-schoolgirls-taking-lunch-at-school-cafete-2026-01-06-00-42-32-utc.webp" alt="Hrană sănătoasă" style="width: 100%; height: 180px; object-fit: cover; object-position: right center; border-radius: 15px; margin-bottom: 20px;">
+                <h3>Hrană bio</h3>
+                <p>Meniu echilibrat, preparat zilnic din ingrediente proaspete.</p>
+            </div>
+            <div class="float-card c-green">
+                <i class="fas fa-clock"></i>
+                <h3>Program</h3>
+                <p>Suport complet pentru părinți: 07:30 - 17:30.</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="section-padding peach-section" id="despre">
+        <div class="container grid-2 reveal">
+            <div>
+                <h2 style="font-size: 2.5rem; margin-bottom: 25px;">A doua casă a copilului tău</h2>
+                <div class="sticky-note" style="transform: rotate(-2deg);">
+                    <i class="fas fa-thumbtack pin"></i>
+                    <h3><i class="fas fa-heart" style="color:#E91E63"></i> Valorile noastre</h3>
+                    <p>Fiecare copil este o stea unică. Ne concentrăm pe siguranță emoțională și pe dezvoltarea încrederii în sine.</p>
+                </div>
+                <div class="sticky-note" style="background: var(--sticky-yellow); transform: rotate(2deg);">
+                    <i class="fas fa-thumbtack pin"></i>
+                    <h3><i class="fas fa-rocket" style="color:#1976D2"></i> Metodologie</h3>
+                    <p>Învățare experiențială: copiii descoperă lumea prin experimente, muzică și explorare directă.</p>
+                </div>
+            </div>
+            <div>
+                <img src="teacher-assisting-schoolgirls-8-9-2026-01-05-04-48-31-utc.webp" class="about-img" alt="Educatoare si copii">
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="curriculum">
+        <div class="container grid-2 reveal">
+            <div class="order-mobile-2">
+                <img src="cute-little-schoolboy-diligent-write-chalk-solve-m-2026-01-09-00-25-10-utc.webp" class="cloud-img" alt="Copil invatand">
+            </div>
+            <div class="curriculum-list">
+                <h2>Ce învățăm astăzi?</h2>
+                <p style="margin-bottom: 30px; font-size: 1.2rem;">Respectăm programa națională folosind instrumente educative moderne și interactive:</p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Logica și gândire matematică distractivă</li>
+                    <li><i class="fas fa-check-circle"></i> Dezvoltarea limbajului și comunicării</li>
+                    <li><i class="fas fa-check-circle"></i> Limba Engleză prin cântece și jocuri</li>
+                    <li><i class="fas fa-check-circle"></i> Educație fizică și coordonare motrică</li>
+                    <li><i class="fas fa-check-circle"></i> Inteligență emoțională și socializare</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding peach-section" id="activitati" style="padding-bottom: 120px;">
+        <div class="container reveal">
+            <h2 style="text-align: center; font-size: 3rem; margin-bottom: 60px;">Momente magice</h2>
+            
+            <div class="grid-2">
+                <div class="float-card c-purple bg-white">
+                    <div class="flex justify-center mb-6">
+                        <img src="creating-finger-painting-2026-01-08-07-08-09-utc.webp" class="round-img" alt="Pictura">
+                    </div>
+                    <h3>Atelier de artă</h3>
+                    <p>Explorăm culorile și texturile în fiecare zi. Micii artiști își exprimă emoțiile prin desen.</p>
+                </div>
+                <div class="float-card c-green bg-white">
+                    <div class="flex justify-center mb-6">
+                        <img src="smiling-kids-playing-on-drum-and-guitar-2026-01-09-08-38-18-utc.webp" class="round-img" alt="Muzica">
+                    </div>
+                    <h3>Educație muzicală</h3>
+                    <p>Ritmul și armonia fac parte din universul nostru. Cântăm, dansăm și învățăm instrumente.</p>
+                </div>
+            </div>
+
+                        <div class="mt-16 bg-white rounded-[40px] shadow-xl overflow-hidden border-b-8 border-green-400 reveal">
+                <div class="grid md:grid-cols-2 items-center">
+                    <div class="p-10 md:p-16">
+                        <div class="inline-block px-4 py-1 rounded-full bg-green-100 text-green-600 font-bold mb-4">Sănătate & Nutriție</div>
+                        <h2 class="text-4xl mb-6 !text-green-600">Sănătate prin alimentație</h2>
+                        <p class="text-lg leading-relaxed text-slate-600">
+                            Avem bucătărie proprie unde pregătim mese calde, evitând zahărul procesat și aditivii. 
+                            Încurajăm copiii să descopere gustul legumelor și fructelor proaspete într-un mediu prietenos.
+                        </p>
+                        <div class="mt-8 flex gap-4">
+                            <span class="flex items-center gap-2 font-semibold text-slate-700"><i class="fas fa-carrot text-orange-400"></i> Bio</span>
+                            <span class="flex items-center gap-2 font-semibold text-slate-700"><i class="fas fa-utensils text-green-400"></i> Proaspăt</span>
+                        </div>
+                    </div>
+                    <div class="h-full min-h-[400px]">
+                        <img src="adorable-schoolgirls-taking-lunch-at-school-cafete-2026-01-06-00-42-32-utc.webp" class="w-full h-full object-cover" alt="Masa la gradinita">
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <footer id="contact">
+        <div class="grass-border"></div>
+        <div class="container footer-content reveal">
+            <div class="footer-col">
+                <span class="footer-logo">
+                    <img src="logo.png" alt="Logo Steaua" class="h-16 w-auto inline-block mr-2 rounded-full border-2 border-white">
+                    Grădinița Steaua
+                </span>
+                <p>Creăm amintiri fericite și punem bazele unui viitor strălucit pentru micuțul tău.</p>
+                <div class="social-icons" style="margin-top: 20px;">
+                    <a href="#" style="color:#4267B2"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color:#E1306C"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color:#FF0000"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Link-uri rapide</h3>
+                <a href="#despre">Despre noi</a>
+                <a href="#curriculum">Programa educatională</a>
+                <a href="#activitati">Activități extracurriculare</a>
+                <a href="#contact">Contact & înscrieri</a>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Contactează-ne</h3>
+                <p><i class="fas fa-map-marker-alt" style="color: var(--btn-orange)"></i> Str. Ion Inculeț nr 5-7, Sector 1, București</p>
+                <p><i class="fas fa-phone" style="color: var(--btn-orange)"></i> 0746 304 807</p>
+                <p><i class="fas fa-envelope" style="color: var(--btn-orange)"></i> gradinita281@yahoo.com</p>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div style="background: #263238; padding: 15px; text-align: center; font-size: 0.85rem;">
+            <p style="margin: 5px 0; color: #B0BEC5;">
+                © 2026 Grădinița Steaua. Toate drepturile rezervate.
+            </p>
+            <p style="margin: 5px 0; color: #B0BEC5;">
+                Crafted in the clouds by
+            </p>
+            <p style="margin: 5px 0; text-align: center;">
+                <img src="skyro.png" alt="sky.ro" style="height: 20px; display: block; margin: 0 auto;">
+            </p>
+        </div>
+
+        <div class="bus-container">
+            <i class="fas fa-bus-alt bus"></i>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/40720088880" target="_blank" class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:scale-110 transition-transform">
+        <svg viewBox="0 0 24 24" fill="white" class="w-8 h-8">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
+
+    <script src="script.js"></script>
+    <script>
+        // Inline script for tabs/modal fallback
+        const modal = document.getElementById('visitModal');
+        const modalContent = modal ? modal.querySelector('div') : null;
+        
+        if (modal && modalContent) {
+            window.openModal = function() {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+            };
+            window.closeModal = function() {
+                modalContent.classList.add('scale-95');
+                setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
+            };
+        }
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('active', 'bg-white', 'text-brand-orange', 'shadow-sm');
+                    b.classList.add('text-slate-500');
+                });
+                btn.classList.add('active', 'bg-white', 'text-brand-orange', 'shadow-sm');
+                btn.classList.remove('text-slate-500');
+                
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+                const target = document.getElementById(btn.dataset.target);
+                if (target) target.classList.remove('hidden');
+            });
+        });
+
+        // Original scroll reveal script
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
+    </script>
+</body>
+</html>
