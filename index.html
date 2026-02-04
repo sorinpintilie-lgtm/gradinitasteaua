@@ -226,13 +226,42 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        h1, h2, h3, h4 { font-family: 'Baloo 2', cursive; color: var(--accent-blue); }
+        /* --- Global Typography Update --- */
+        h1, h2, h3, h4 { 
+            font-family: 'Baloo 2', cursive; 
+            line-height: 1.1; 
+            color: var(--accent-blue);
+            margin-bottom: 1.5rem;
+        }
         
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        /* Make Titles Significantly Bigger */
+        /* --- Typography Tuning --- */
+        h2 { 
+            font-size: clamp(1.8rem, 2.2vw, 2.3rem) !important;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 1.6vw, 1.6rem) !important;
+        }
+        
+        /* --- Global Layout Fix --- */
+        .site-container{ 
+            max-width: 1150px; 
+            margin: 0 auto; 
+            width: 100%;
+            padding: 0 24px; /* Balanced side padding */
+        }
+
+        @media (max-width: 768px) {
+            .site-container { padding: 0 25px; }
+        }
         .grid-2 { 
             display: grid; 
-            grid-template-columns: 1fr; /* Default to 1 column for mobile */
-            gap: 30px; 
+            grid-template-columns: 1fr; 
+            gap: 40px; 
             align-items: center; 
         }
 
@@ -240,7 +269,7 @@
         @media (min-width: 769px) {
             .grid-2 { 
                 grid-template-columns: 1fr 1fr; 
-                gap: 60px; 
+                gap: 48px; 
             }
         }
 
@@ -285,10 +314,10 @@
         /* --- HERO SECTION --- */
         .hero {
             background: linear-gradient(180deg, var(--sky-blue) 0%, #81D4FA 100%);
-            padding: 80px 20px 220px; text-align: center; color: white; position: relative; overflow: hidden;
+            padding: 40px 20px 120px; text-align: center; color: white; position: relative; overflow: hidden;
         }
         .hero h1 { 
-            font-size: 2.5rem; /* Smaller for mobile */
+            font-size: 2rem; /* Smaller for mobile */
             text-shadow: 2px 2px 0 rgba(0,0,0,0.1); 
             margin-bottom: 15px; 
             color: white; 
@@ -297,12 +326,12 @@
         }
 
         @media (min-width: 769px) {
-            .hero h1 { font-size: 4rem; }
+            .hero h1 { font-size: 3rem; }
         }
-        .hero p { font-size: 1.4rem; opacity: 0.95; color: white; margin-bottom: 40px; font-weight: 600; }
+        .hero p { font-size: clamp(1rem, 1.2vw, 1.2rem); opacity: 0.95; color: white; margin-bottom: 30px; font-weight: 600; }
         
         .hero-img-wrapper {
-            position: relative; max-width: 850px; margin: 0 auto; z-index: 5;
+            position: relative; max-width: 700px; margin: 0 auto; z-index: 5;
             width: 100%;
             padding: 0 10px;
         }
@@ -313,44 +342,111 @@
         }
 
         .hero-img {
-            width: 100%; border-radius: 30px; border: 12px solid white;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2); transform: rotate(-2deg);
+            width: 100%; border-radius: 20px; border: 8px solid white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); transform: rotate(-2deg);
             transition: transform 0.3s;
         }
         .hero-img:hover { transform: rotate(0deg) scale(1.02); }
 
         /* --- CLOUD SEPARATOR --- */
         .cloud-separator {
-            position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0;
-            z-index: 2;
+            position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; z-index: 2;
         }
         .cloud-separator svg {
-            position: relative; display: block; width: calc(100% + 1.3px); height: 100px;
+            display: block; width: calc(100% + 2px); height: 60px; margin-left: -1px;
+        }
+        
+        @media (min-width: 768px) {
+            .cloud-separator svg { height: 100px; }
         }
         .cloud-separator .shape-fill { fill: #FFF9F0; /* Matches new body bg */ }
 
         /* --- FLOATING CARDS --- */
-        .cards-container { margin-top: -120px; position: relative; z-index: 10; padding-bottom: 60px; }
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .cards-container { margin-top: -40px; position: relative; z-index: 10; padding-bottom: 40px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        /* Improve Card Layout */
         .float-card {
-            background: white; padding: 40px 30px; border-radius: 25px; text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: 0.4s;
-            border-bottom: 8px solid; position: relative; overflow: hidden;
+            background: white; 
+            padding: clamp(24px, 3vw, 36px) clamp(18px, 2.5vw, 28px);
+            border-radius: clamp(16px, 2.5vw, 24px);
+            border-bottom: 5px solid;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.4s;
+            position: relative; overflow: hidden;
+        }
+        
+        .float-card p {
+            font-size: 1.15rem;
+            line-height: 1.6;
         }
         .float-card::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 10px;
             background: inherit; opacity: 0.2;
         }
-        .float-card:hover { transform: translateY(-15px) scale(1.02); box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
-        .float-card i { font-size: 3rem; margin-bottom: 20px; display: inline-block; }
+        .float-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .float-card i { font-size: 2.2rem; margin-bottom: 12px; display: inline-block; }
         .float-card:hover i { animation: wobble 0.8s ease-in-out; }
 
         .c-purple { border-color: #BA68C8; } .c-purple i { color: #BA68C8; }
         .c-orange { border-color: #FF8A65; } .c-orange i { color: #FF8A65; }
         .c-green { border-color: #AED581; } .c-green i { color: #AED581; }
 
-        /* --- SECTIONS --- */
-        .section-padding { padding: 100px 0; }
+        /* --- Section Spacing --- */
+        .section-padding {
+            padding: clamp(40px, 5vw, 60px) 0;
+        }
+        
+        /* --- Explicit Health Card Styles (No Tailwind dependence) --- */
+        .health-card {
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border-bottom: 5px solid #4ADE80; /* Green border */
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* The layout inside the health card */
+        .health-card-grid {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .health-content {
+            padding: clamp(24px, 3vw, 36px);
+        }
+
+        .health-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        @media (min-width: 769px) {
+            .health-card-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+            }
+            .health-image {
+                height: 100%;
+                min-height: 450px;
+            }
+        }
+
+        /* --- Floating Cards Fix --- */
+        .cards-container {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        /* Responsive adjustments for titles */
+        @media (max-width: 768px) {
+            h2 { font-size: 2rem !important; }
+            h3 { font-size: 1.5rem !important; }
+            .site-container { padding: 0 25px; }
+        }
         
         .peach-section { 
             background-color: var(--bg-peach); position: relative;
@@ -358,21 +454,27 @@
             background-position: top center;
             background-size: 40px 40px;
             background-repeat: repeat-x;
-            padding-top: 120px;
+            padding-top: 80px;
         }
         
         .sticky-note {
-            background: var(--sticky-green); padding: 40px; position: relative;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1); margin-bottom: 40px;
-            border-radius: 2px 2px 25px 2px;
+            background: var(--sticky-green); padding: 32px; position: relative;
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.1); margin-bottom: 24px;
+            border-radius: 2px 2px 20px 2px;
             transition: transform 0.3s;
         }
         .sticky-note:hover { transform: scale(1.03) !important; z-index: 5; }
         .pin { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); color: #EF5350; font-size: 2rem; z-index: 2; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3)); }
         
+        /* Sticky Note Titles */
+        .sticky-note h3 {
+            font-size: 1.4rem !important;
+            margin-bottom: 8px;
+        }
+        
         .about-img {
-            width: 100%; border-radius: 40px; border: 10px solid white;
-            box-shadow: 15px 15px 0 var(--sky-blue);
+            width: 100%; border-radius: 30px; border: 6px solid white;
+            box-shadow: 10px 10px 0 var(--sky-blue);
         }
 
         /* --- CURRICULUM --- */
@@ -400,15 +502,20 @@
             text-align: center;
             padding: 20px;
         }
-        .magic-item h3 { font-size: 1.8rem; margin: 15px 0 10px; color: var(--accent-blue); }
+        .magic-item h3 { font-size: 1.4rem; margin: 12px 0 8px; color: var(--accent-blue); }
         .magic-item p { font-size: 1.1rem; color: #546E7A; }
 
         .round-img {
-            width: 280px; height: 280px; object-fit: cover; border-radius: 50%;
-            border: 10px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            margin-bottom: 15px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 180px; 
+            height: 180px;
+            object-fit: cover; 
+            border-radius: 50%;
+            border: 6px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 15px;
         }
-        .round-img:hover { transform: scale(1.1) rotate(5deg); border-color: white; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .round-img:hover { transform: scale(1.1) rotate(5deg); border-color: white; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
 
         /* --- FOOTER --- */
         footer { 
@@ -426,8 +533,8 @@
         }
         
         .footer-content {
-            padding: 60px 20px 60px;
-            display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 50px;
+            padding: 40px 0;
+            display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px;
         }
         
         .footer-col h3 { color: var(--sky-blue); margin-bottom: 20px; font-size: 1.5rem; }
@@ -473,6 +580,84 @@
             .footer-content { text-align: center; }
             .grass-border { background-size: 20px 40px; }
         }
+
+        /* --- CSS FIXES: Scale down oversized typography and padding --- */
+        /* 1) Consistent page padding (sections feel like they have "gutters") */
+        .container{
+            max-width: 1150px;
+            margin: 0 auto;
+            width: 100%;
+            padding-left: clamp(16px, 4vw, 56px);
+            padding-right: clamp(16px, 4vw, 56px);
+        }
+
+        /* 2) Section spacing less "huge" */
+        .section-padding{
+            padding: clamp(40px, 5vw, 60px) 0;
+        }
+
+        /* 3) Typography: remove the huge hardcoded sizes */
+        h2{
+            font-size: clamp(1.75rem, 2.2vw, 2.35rem) !important;
+            margin-bottom: 24px;
+        }
+
+        h3{
+            font-size: clamp(1.25rem, 1.6vw, 1.6rem) !important;
+        }
+
+        /* 4) Tone down big blocks */
+        .hero p{
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+        }
+
+        .float-card{
+            padding: clamp(24px, 3vw, 36px) clamp(18px, 2.5vw, 28px);
+        }
+
+        .health-content{
+            padding: clamp(24px, 3vw, 44px);
+        }
+        /* --- Special Section Titles --- */
+        .special-title {
+            position: relative;
+            display: inline-block;
+            margin: 0;
+            font-size: clamp(2.2rem, 3vw, 3rem) !important;
+            font-weight: 800 !important;
+        }
+        .special-title::before,
+        .special-title::after {
+            content: '✨';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+        .special-title::before { left: -40px; }
+        .special-title::after { right: -40px; }
+        
+        .title-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .title-line {
+            height: 4px;
+            flex: 1;
+            max-width: 120px;
+            border-radius: 2px;
+        }
+        .title-line.left {
+            background: linear-gradient(90deg, transparent, var(--sky-blue));
+        }
+        .title-line.right {
+            background: linear-gradient(90deg, var(--sky-blue), transparent);
+        }
     </style>
 </head>
 <body class="overflow-x-hidden font-sans text-slate-600">
@@ -505,7 +690,7 @@
     </nav>
 
     <header class="hero">
-        <div class="container">
+        <div class="site-container">
             <h1>Bine ați venit la Steaua!</h1>
             <p>Locul unde educația prinde aripi prin joacă și prietenie.</p>
             
@@ -515,64 +700,78 @@
             </div>
         </div>
         
-        <div class="cloud-separator">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" style="opacity:0"></path>
-                <path d="M0,0V15.81C13,36.92,54.64,75.06,128.23,88.47c132.89,24.22,130.63-27.42,274.65-27.42,126.87,0,131.57,63.09,251.13,67.89S759,96.53,799.3,77.94c52.62-24.3,95-58.42,166.7-65.7C1043.68,4.3,1116.59,23.3,1200,43V0Z" fill="#FFF9F0" transform="scale(1, -1) translate(0, -100)"></path>
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        <div class="cloud-separator" style="position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; z-index: 2;">
+            <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="display: block; width: calc(100% + 2px); height: 60px; margin-left: -1px;">
+                <path fill="#FFF9F0" d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,58.7C1248,64,1344,64,1392,64L1440,64L1440,100L1392,100C1344,100,1248,100,1152,100C1056,100,960,100,864,100C768,100,672,100,576,100C480,100,384,100,288,100C192,100,96,100,48,100L0,100Z"></path>
             </svg>
         </div>
     </header>
 
-    <div class="container cards-container reveal">
+    <div class="site-container cards-container reveal">
         <div class="cards-grid">
             <div class="float-card c-purple">
-                <i class="fas fa-palette"></i>
+                <div class="mb-4 transform hover:scale-110 transition-transform">
+                    <i class="fas fa-palette text-5xl"></i>
+                </div>
                 <h3>Creativitate</h3>
-                <p>Pictură, teatru de păpuși și ateliere de artă manuală.</p>
+                <p class="text-slate-600">Pictură, teatru de păpuși și ateliere de artă manuală pentru micii artiști.</p>
             </div>
             <div class="float-card c-orange">
-                <i class="fas fa-apple-alt"></i>
+                <div class="mb-4 transform hover:scale-110 transition-transform">
+                    <i class="fas fa-leaf text-5xl"></i>
+                </div>
                 <h3>Hrană bio</h3>
-                <p>Meniu echilibrat, preparat zilnic din ingrediente proaspete.</p>
+                <p class="text-slate-600">Meniu echilibrat, preparat zilnic din ingrediente proaspete și sănătoase.</p>
             </div>
             <div class="float-card c-green">
-                <i class="fas fa-clock"></i>
+                <div class="mb-4 transform hover:scale-110 transition-transform">
+                    <i class="fas fa-clock text-5xl"></i>
+                </div>
                 <h3>Program</h3>
-                <p>Suport complet pentru părinți: 07:30 - 17:30.</p>
+                <p class="text-slate-600">Suport complet pentru părinți: 07:30 - 17:30.</p>
             </div>
         </div>
     </div>
 
     <section class="section-padding peach-section" id="despre">
-        <div class="container grid-2 reveal">
-            <div>
-                <h2 style="font-size: 2.5rem; margin-bottom: 25px;">A doua casă a copilului tău</h2>
-                <div class="sticky-note" style="transform: rotate(-2deg);">
-                    <i class="fas fa-thumbtack pin"></i>
-                    <h3><i class="fas fa-heart" style="color:#E91E63"></i> Valorile noastre</h3>
-                    <p>Fiecare copil este o stea unică. Ne concentrăm pe siguranță emoțională și pe dezvoltarea încrederii în sine.</p>
+        <div class="site-container grid-2 reveal">
+            <div class="pr-0 md:pr-12">
+                <div class="title-decoration">
+                    <div class="title-line left"></div>
+                    <h2 class="special-title">A doua casă</h2>
+                    <div class="title-line right"></div>
                 </div>
-                <div class="sticky-note" style="background: var(--sticky-yellow); transform: rotate(2deg);">
+                
+                <div class="sticky-note" style="transform: rotate(-1.5deg); margin-bottom: 50px;">
                     <i class="fas fa-thumbtack pin"></i>
-                    <h3><i class="fas fa-rocket" style="color:#1976D2"></i> Metodologie</h3>
-                    <p>Învățare experiențială: copiii descoperă lumea prin experimente, muzică și explorare directă.</p>
+                    <h3><i class="fas fa-heart mr-2" style="color:#E91E63"></i> Valorile noastre</h3>
+                    <p class="text-lg">Fiecare copil este o stea unică. Ne concentrăm pe siguranță emoțională și pe dezvoltarea încrederii în sine.</p>
+                </div>
+
+                <div class="sticky-note" style="background: var(--sticky-yellow); transform: rotate(1.5deg);">
+                    <i class="fas fa-thumbtack pin"></i>
+                    <h3><i class="fas fa-rocket mr-2" style="color:#1976D2"></i> Metodologie</h3>
+                    <p class="text-lg">Învățare experiențială: copiii descoperă lumea prin experimente, muzică și explorare directă.</p>
                 </div>
             </div>
             <div>
-                <img src="teacher-assisting-schoolgirls-8-9-2026-01-05-04-48-31-utc.webp" class="about-img" alt="Educatoare si copii">
+                <img src="teacher-assisting-schoolgirls-8-9-2026-01-05-04-48-31-utc.webp" class="about-img hover:rotate-0 transition-all duration-500 rotate-2" alt="Educatoare si copii">
             </div>
         </div>
     </section>
 
     <section class="section-padding" id="curriculum">
-        <div class="container grid-2 reveal">
+        <div class="site-container grid-2 reveal">
             <div class="order-mobile-2">
                 <img src="cute-little-schoolboy-diligent-write-chalk-solve-m-2026-01-09-00-25-10-utc.webp" class="cloud-img" alt="Copil invatand">
             </div>
-            <div class="curriculum-list">
-                <h2>Ce învățăm astăzi?</h2>
-                <p style="margin-bottom: 30px; font-size: 1.2rem;">Respectăm programa națională folosind instrumente educative moderne și interactive:</p>
+            <div class="curriculum-list" style="display: flex; flex-direction: column;">
+                <div class="title-decoration">
+                    <div class="title-line left"></div>
+                    <h2 class="special-title">Ce învățăm astăzi?</h2>
+                    <div class="title-line right"></div>
+                </div>
+                <p class="text-xl mb-10 text-slate-700" style="margin-top: 10px;">Respectăm programa națională folosind instrumente educative moderne și interactive:</p>
                 <ul>
                     <li><i class="fas fa-check-circle"></i> Logica și gândire matematică distractivă</li>
                     <li><i class="fas fa-check-circle"></i> Dezvoltarea limbajului și comunicării</li>
@@ -584,43 +783,57 @@
         </div>
     </section>
 
-    <section class="section-padding peach-section" id="activitati" style="padding-bottom: 120px;">
-        <div class="container reveal">
-            <h2 style="text-align: center; font-size: 3rem; margin-bottom: 60px;">Momente magice</h2>
+    <section class="section-padding peach-section" id="activitati">
+        <div class="site-container reveal">
+            <div class="title-decoration">
+                <div class="title-line left"></div>
+                <h2 class="special-title">Momente magice</h2>
+                <div class="title-line right"></div>
+            </div>
             
-            <div class="grid-2">
+            <div class="grid-2" style="gap: 24px;">
                 <div class="float-card c-purple bg-white">
-                    <div class="flex justify-center mb-6">
-                        <img src="creating-finger-painting-2026-01-08-07-08-09-utc.webp" class="round-img" alt="Pictura">
+                    <div class="mb-6">
+                        <img src="creating-finger-painting-2026-01-08-07-08-09-utc.webp" class="" style="width: 100%; height: 250px; object-fit: cover; border-radius: 16px;" alt="Pictura">
                     </div>
-                    <h3>Atelier de artă</h3>
-                    <p>Explorăm culorile și texturile în fiecare zi. Micii artiști își exprimă emoțiile prin desen.</p>
+                    <h2 style="color: #7B1FA2; font-size: 1.8rem !important; margin-bottom: 15px;">Atelier de artă</h2>
+                    <p style="font-size: 1.1rem; color: #475569; line-height: 1.7;">Explorăm culorile și texturile în fiecare zi. Micii artiști își exprimă emoțiile prin desen.</p>
                 </div>
-                <div class="float-card c-green bg-white">
-                    <div class="flex justify-center mb-6">
-                        <img src="smiling-kids-playing-on-drum-and-guitar-2026-01-09-08-38-18-utc.webp" class="round-img" alt="Muzica">
+                <div class="float-card c-orange bg-white">
+                    <div class="mb-6">
+                        <img src="smiling-kids-playing-on-drum-and-guitar-2026-01-09-08-38-18-utc.webp" class="" style="width: 100%; height: 250px; object-fit: cover; border-radius: 16px;" alt="Muzica">
                     </div>
-                    <h3>Educație muzicală</h3>
-                    <p>Ritmul și armonia fac parte din universul nostru. Cântăm, dansăm și învățăm instrumente.</p>
+                    <h2 style="color: #E65100; font-size: 1.8rem !important; margin-bottom: 15px;">Educație muzicală</h2>
+                    <p style="font-size: 1.1rem; color: #475569; line-height: 1.7;">Ritmul și armonia fac parte din universul nostru. Cântăm, dansăm și învățăm instrumente.</p>
                 </div>
             </div>
 
-                        <div class="mt-16 bg-white rounded-[40px] shadow-xl overflow-hidden border-b-8 border-green-400 reveal">
-                <div class="grid md:grid-cols-2 items-center">
-                    <div class="p-10 md:p-16">
-                        <div class="inline-block px-4 py-1 rounded-full bg-green-100 text-green-600 font-bold mb-4">Sănătate & Nutriție</div>
-                        <h2 class="text-4xl mb-6 !text-green-600">Sănătate prin alimentație</h2>
-                        <p class="text-lg leading-relaxed text-slate-600">
+            <div class="health-card reveal">
+                <div class="health-card-grid">
+                    <div class="health-content">
+                        <div style="background:#DCFCE7; color:#166534; padding: 5px 15px; border-radius: 20px; display:inline-block; font-weight:bold; margin-bottom: 15px;">
+                            Sănătate & Nutriție
+                        </div>
+                        
+                        <h2 style="color: #166534;">Sănătate prin alimentație</h2>
+                        
+                        <p style="font-size: 1.1rem; color: #475569; line-height: 1.7; margin-bottom: 30px;">
                             Avem bucătărie proprie unde pregătim mese calde, evitând zahărul procesat și aditivii. 
                             Încurajăm copiii să descopere gustul legumelor și fructelor proaspete într-un mediu prietenos.
                         </p>
-                        <div class="mt-8 flex gap-4">
-                            <span class="flex items-center gap-2 font-semibold text-slate-700"><i class="fas fa-carrot text-orange-400"></i> Bio</span>
-                            <span class="flex items-center gap-2 font-semibold text-slate-700"><i class="fas fa-utensils text-green-400"></i> Proaspăt</span>
+                        
+                        <div style="display: flex; gap: 20px;">
+                            <span style="font-weight: 700; color: #334155; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-carrot" style="color: #FB923C;"></i> Bio
+                            </span>
+                            <span style="font-weight: 700; color: #334155; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-utensils" style="color: #4ADE80;"></i> Proaspăt
+                            </span>
                         </div>
                     </div>
-                    <div class="h-full min-h-[400px]">
-                        <img src="adorable-schoolgirls-taking-lunch-at-school-cafete-2026-01-06-00-42-32-utc.webp" class="w-full h-full object-cover" alt="Masa la gradinita">
+                    
+                    <div>
+                        <img src="adorable-schoolgirls-taking-lunch-at-school-cafete-2026-01-06-00-42-32-utc.webp" class="health-image" alt="Masa la gradinita">
                     </div>
                 </div>
             </div>
@@ -628,7 +841,7 @@
 
     <footer id="contact">
         <div class="grass-border"></div>
-        <div class="container footer-content reveal">
+        <div class="site-container footer-content reveal">
             <div class="footer-col">
                 <span class="footer-logo">
                     <img src="logo.png" alt="Logo Steaua" class="h-16 w-auto inline-block mr-2 rounded-full border-2 border-white">
@@ -659,16 +872,16 @@
         </div>
 
         <!-- Copyright -->
-        <div style="background: #263238; padding: 15px; text-align: center; font-size: 0.85rem;">
+        <div style="background: rgba(0,0,0,0.2); padding: 15px; text-align: center; font-size: 0.85rem;">
             <p style="margin: 5px 0; color: #B0BEC5;">
                 © 2026 Grădinița Steaua. Toate drepturile rezervate.
             </p>
             <p style="margin: 5px 0; color: #B0BEC5;">
                 Crafted in the clouds by
             </p>
-            <p style="margin: 5px 0; text-align: center;">
-                <img src="skyro.png" alt="sky.ro" style="height: 20px; display: block; margin: 0 auto;">
-            </p>
+            <div style="width: 100%; text-align: center; margin: 5px 0;">
+                <img src="skyro.png" alt="sky.ro" style="height: 20px; display: inline-block;">
+            </div>
         </div>
 
         <div class="bus-container">
