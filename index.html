@@ -297,12 +297,12 @@
         }
         .logo i { color: #FDD835; text-shadow: 2px 2px 0 #FF6F00; animation: wobble 2s infinite ease-in-out; animation-delay: 3s; }
         
-        .nav-links a { margin-left: 25px; text-decoration: none; font-weight: 700; color: var(--text-dark); transition: 0.3s; position: relative; }
-        .nav-links a::after {
+        .nav-links a:not(.btn-cta) { margin-left: 25px; text-decoration: none; font-weight: 700; color: var(--text-dark); transition: 0.3s; position: relative; }
+        .nav-links a:not(.btn-cta)::after {
             content: ''; position: absolute; width: 0; height: 3px; bottom: -5px; left: 0;
             background-color: var(--btn-orange); border-radius: 2px; transition: 0.3s;
         }
-        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:not(.btn-cta):hover::after { width: 100%; }
         
         .btn-cta { 
             background: var(--btn-orange); color: white !important; padding: 12px 28px; border-radius: 50px; 
@@ -314,39 +314,99 @@
         /* --- HERO SECTION --- */
         .hero {
             background: linear-gradient(180deg, var(--sky-blue) 0%, #81D4FA 100%);
-            padding: 40px 20px 120px; text-align: center; color: white; position: relative; overflow: hidden;
+            padding: 60px 20px 80px;
+            position: relative;
+            overflow: hidden;
         }
-        .hero h1 { 
-            font-size: 2rem; /* Smaller for mobile */
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.1); 
-            margin-bottom: 15px; 
-            color: white; 
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+        }
+        .hero-text {
+            text-align: center;
+            max-width: 600px;
+        }
+        .hero-text h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 15px;
             line-height: 1.2;
-            animation: float 6s infinite ease-in-out; 
         }
-
-        @media (min-width: 769px) {
-            .hero h1 { font-size: 3rem; }
+        .hero-text p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            color: white;
+            margin-bottom: 30px;
+            font-weight: 600;
         }
-        .hero p { font-size: clamp(1rem, 1.2vw, 1.2rem); opacity: 0.95; color: white; margin-bottom: 30px; font-weight: 600; }
-        
-        .hero-img-wrapper {
-            position: relative; max-width: 700px; margin: 0 auto; z-index: 5;
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .hero-btn {
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+        .hero-btn-primary {
+            background: var(--btn-orange);
+            color: white;
+            box-shadow: 0 5px 0 #D84315;
+        }
+        .hero-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #D84315;
+        }
+        .hero-btn-secondary {
+            background: white;
+            color: var(--sky-blue);
+            box-shadow: 0 5px 0 rgba(0,0,0,0.1);
+        }
+        .hero-btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.15);
+        }
+        .hero-img-container {
+            position: relative;
             width: 100%;
-            padding: 0 10px;
+            max-width: 600px;
         }
-        .blob-bg {
-            position: absolute; top: -10%; left: -5%; width: 110%; height: 110%;
-            background: rgba(255,255,255,0.3); z-index: -1;
-            animation: blob-bounce 8s infinite ease-in-out;
+        .hero-img {
+            width: 100%;
+            border-radius: 20px;
+            border: 8px solid white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        @media (min-width: 992px) {
+            .hero-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                text-align: left;
+            }
+            .hero-text {
+                text-align: left;
+                max-width: 500px;
+            }
+            .hero-text h1 {
+                font-size: 3.2rem;
+            }
+            .hero-buttons {
+                justify-content: flex-start;
+            }
         }
 
-        .hero-img {
-            width: 100%; border-radius: 20px; border: 8px solid white;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2); transform: rotate(-2deg);
-            transition: transform 0.3s;
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
         }
-        .hero-img:hover { transform: rotate(0deg) scale(1.02); }
 
         /* --- CLOUD SEPARATOR --- */
         .cloud-separator {
@@ -626,17 +686,6 @@
             font-size: clamp(2.2rem, 3vw, 3rem) !important;
             font-weight: 800 !important;
         }
-        .special-title::before,
-        .special-title::after {
-            content: '✨';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5rem;
-            opacity: 0.8;
-        }
-        .special-title::before { left: -40px; }
-        .special-title::after { right: -40px; }
         
         .title-decoration {
             display: flex;
@@ -690,12 +739,16 @@
     </nav>
 
     <header class="hero">
-        <div class="site-container">
-            <h1>Bine ați venit la Steaua!</h1>
-            <p>Locul unde educația prinde aripi prin joacă și prietenie.</p>
-            
-            <div class="hero-img-wrapper">
-                <div class="blob-bg"></div>
+        <div class="site-container hero-content">
+            <div class="hero-text">
+                <h1>Bine ați venit la Grădinița Steaua!</h1>
+                <p>Locul unde educația prinde aripi prin joacă și prietenie.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="hero-btn hero-btn-primary">Înscrieri 2026</a>
+                    <a href="#despre" class="hero-btn hero-btn-secondary">Descoperă mai mult</a>
+                </div>
+            </div>
+            <div class="hero-img-container">
                 <img src="children-learning-in-a-school-classroom-2026-01-09-10-50-11-utc.webp" class="hero-img" alt="Copii fericiti la gradinita">
             </div>
         </div>
@@ -709,22 +762,22 @@
 
     <div class="site-container cards-container reveal">
         <div class="cards-grid">
-            <div class="float-card c-purple">
-                <div class="mb-4 transform hover:scale-110 transition-transform">
+            <div class="float-card c-purple" style="text-align: center;">
+                <div class="mb-4 transform hover:scale-110 transition-transform" style="display: flex; justify-content: center;">
                     <i class="fas fa-palette text-5xl"></i>
                 </div>
                 <h3>Creativitate</h3>
                 <p class="text-slate-600">Pictură, teatru de păpuși și ateliere de artă manuală pentru micii artiști.</p>
             </div>
-            <div class="float-card c-orange">
-                <div class="mb-4 transform hover:scale-110 transition-transform">
+            <div class="float-card c-orange" style="text-align: center;">
+                <div class="mb-4 transform hover:scale-110 transition-transform" style="display: flex; justify-content: center;">
                     <i class="fas fa-leaf text-5xl"></i>
                 </div>
                 <h3>Hrană bio</h3>
                 <p class="text-slate-600">Meniu echilibrat, preparat zilnic din ingrediente proaspete și sănătoase.</p>
             </div>
-            <div class="float-card c-green">
-                <div class="mb-4 transform hover:scale-110 transition-transform">
+            <div class="float-card c-green" style="text-align: center;">
+                <div class="mb-4 transform hover:scale-110 transition-transform" style="display: flex; justify-content: center;">
                     <i class="fas fa-clock text-5xl"></i>
                 </div>
                 <h3>Program</h3>
